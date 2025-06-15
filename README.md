@@ -8,11 +8,13 @@ A full-stack appointment booking system built with **Nx monorepo**, **React 19**
 - **View Schedule** - See doctor's availability with real-time updates
 - **Prevent Double Booking** - System prevents booking the same slot twice
 - **Responsive Design** - Mobile-first design with Material-UI
+- **Component Documentation** - Interactive Storybook with comprehensive test cases
 
 ## Tech Stack
 
 **Frontend:** React 19, TypeScript, Material-UI 6+, React Query  
 **Backend:** Node.js, Express, TypeScript  
+**Documentation:** Storybook with play canvas testing  
 **Tools:** Nx Monorepo, pnpm, Webpack
 
 ## Prerequisites
@@ -53,6 +55,9 @@ pnpm serve:backend
 
 # Frontend only (port 4200)
 pnpm serve:frontend
+
+# Storybook
+pnpm storybook
 ```
 
 ## Access Points
@@ -65,24 +70,34 @@ pnpm serve:frontend
 ```
 healthcare-workspace/
 ├── package.json                           # pnpm workspace config
+├── .storybook/                           # Storybook configuration
+│   ├── main.ts
+│   ├── preview.ts
 ├── apps/
 │   ├── doctor-appointment-system-fe/      # React Frontend
 │   │   ├── src/
 │   │   │   ├── main.tsx                   # App entry point with QueryClient
+│   │   │   ├── mocks/
+│   │   │   │   └── data/
+│   │   │   │       └── schedule.ts        # Mock data for stories
 │   │   │   └── app/
 │   │   │       ├── App.tsx                # Main app with lazy loading
+│   │   │       ├── App.stories.tsx
 │   │   │       ├── types.ts               # TypeScript interfaces
 │   │   │       ├── components/
-│   │   │       │   ├── index.ts           # Component exports
+│   │   │       │   ├── index.ts
 │   │   │       │   └── TabPanel.tsx       # Reusable TabPanel component
 │   │   │       ├── features/
 │   │   │       │   ├── AppointmentBooking/
-│   │   │       │   │   └── AppointmentBooking.tsx
+│   │   │       │   │   ├── AppointmentBooking.tsx
+│   │   │       │   │   └── AppointmentBooking.stories.tsx
 │   │   │       │   └── Schedule/
 │   │   │       │       ├── Schedule.tsx
-│   │   │       │       └── ScheduleDayItem.tsx
+│   │   │       │       ├── Schedule.stories.tsx
+│   │   │       │       ├── ScheduleDayItem.tsx
+│   │   │       │       └── ScheduleDayItem.stories.tsx
 │   │   │       ├── hooks/
-│   │   │       │   ├── index.ts           # Hook exports
+│   │   │       │   ├── index.ts
 │   │   │       │   ├── useDoctor.ts       # Doctor data fetching
 │   │   │       │   ├── useSchedule.ts     # Schedule data fetching
 │   │   │       │   ├── useBookAppointment.ts  # Booking mutation
