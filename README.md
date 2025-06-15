@@ -9,6 +9,7 @@ A full-stack appointment booking system built with **Nx monorepo**, **React 19**
 - **Prevent Double Booking** - System prevents booking the same slot twice
 - **Responsive Design** - Mobile-first design with Material-UI
 - **Component Documentation** - Interactive Storybook with comprehensive test cases
+- **Route-based Navigation** - Clean URLs and browser history support
 
 ## Tech Stack
 
@@ -72,44 +73,48 @@ healthcare-workspace/
 ├── package.json                           # pnpm workspace config
 ├── .storybook/                           # Storybook configuration
 │   ├── main.ts
-│   ├── preview.ts
+│   └── preview.ts
 ├── apps/
 │   ├── doctor-appointment-system-fe/      # React Frontend
 │   │   ├── src/
 │   │   │   ├── main.tsx                   # App entry point with QueryClient
 │   │   │   ├── mocks/
-│   │   │   │   └── data/
-│   │   │   │       └── schedule.ts        # Mock data for stories
+│   │   │   │   ├── data/
+│   │   │   │   │   └── schedule.ts        # Mock data for stories
+│   │   │   │   └── handlers/
+│   │   │   │       ├── appointments.ts
+│   │   │   │       ├── doctorDetails.ts
+│   │   │   │       └── schedule.ts
 │   │   │   └── app/
-│   │   │       ├── App.tsx                # Main app with lazy loading
-│   │   │       ├── App.stories.tsx
-│   │   │       ├── types.ts               # TypeScript interfaces
-│   │   │       ├── components/
-│   │   │       │   ├── index.ts
-│   │   │       │   └── TabPanel.tsx       # Reusable TabPanel component
-│   │   │       ├── features/
-│   │   │       │   ├── AppointmentBooking/
-│   │   │       │   │   ├── AppointmentBooking.tsx
-│   │   │       │   │   └── AppointmentBooking.stories.tsx
-│   │   │       │   └── Schedule/
-│   │   │       │       ├── Schedule.tsx
-│   │   │       │       ├── Schedule.stories.tsx
-│   │   │       │       ├── ScheduleDayItem.tsx
-│   │   │       │       └── ScheduleDayItem.stories.tsx
-│   │   │       ├── hooks/
-│   │   │       │   ├── index.ts
-│   │   │       │   ├── useDoctor.ts       # Doctor data fetching
-│   │   │       │   ├── useSchedule.ts     # Schedule data fetching
-│   │   │       │   ├── useBookAppointment.ts  # Booking mutation
-│   │   │       │   └── useAppointmentForm.ts  # Form state management
-│   │   │       ├── services/
-│   │   │       │   └── api.ts             # API endpoints & axios config
-│   │   │       ├── utils/
-│   │   │       │   └── dateUtils.ts       # Date formatting utilities
-│   │   │       └── reducers/
-│   │   │           └── appointmentForm/
-│   │   │               ├── appointmentFormReducer.ts
-│   │   │               └── appointmentFormActionTypes.ts
+│   │   │       ├── App.tsx                # Root app with BrowserRouter
+│   │   │       ├── AppLayout.tsx          # Main layout with navigation
+│   │   │       ├── AppLayout.stories.tsx
+│   │   │       └── AppRoutes.tsx          # Route definitions and lazy loading
+│   │   │   ├── common/                    # Shared utilities and services
+│   │   │   │   ├── hooks/
+│   │   │   │   │   ├── index.ts
+│   │   │   │   │   ├── useDoctor.ts       # Doctor data fetching
+│   │   │   │   │   ├── useSchedule.ts     # Schedule data fetching
+│   │   │   │   │   └── useBookAppointment.ts  # Booking mutation
+│   │   │   │   ├── services/
+│   │   │   │   │   └── api.ts             # API endpoints & axios config
+│   │   │   │   ├── types.ts               # TypeScript interfaces
+│   │   │   │   └── utils/
+│   │   │   │       └── dateUtils.ts       # Date formatting utilities
+│   │   │   └── features/
+│   │   │       ├── AppointmentBooking/
+│   │   │       │   ├── AppointmentBooking.tsx
+│   │   │       │   ├── AppointmentBooking.stories.tsx
+│   │   │       │   ├── hooks/
+│   │   │       │   │   └── useAppointmentForm.ts   # Form state management
+│   │   │       │   └── reducers/
+│   │   │       │       ├── appointmentFormReducer.ts
+│   │   │       │       └── appointmentFormActionTypes.ts
+│   │   │       └── Schedule/
+│   │   │           ├── Schedule.tsx
+│   │   │           ├── Schedule.stories.tsx
+│   │   │           ├── ScheduleDayItem.tsx
+│   │   │           └── ScheduleDayItem.stories.tsx
 │   │   └── project.json
 │   └── doctor-appointment-system-bff/     # Node.js Backend
 │       └── src/main.ts
