@@ -1,6 +1,6 @@
 import { Box, Typography, Grid, Paper } from '@mui/material';
 import { CalendarMonth, AccessTime } from '@mui/icons-material';
-import type { DaySchedule } from 'apps/doctor-appointment-system-fe/src/app/types';
+import type { DaySchedule } from 'apps/doctor-appointment-system-fe/src/common/types';
 import { ScheduleDayItem } from './ScheduleDayItem';
 
 type ScheduleProps = {

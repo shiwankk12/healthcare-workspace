@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Typography,
@@ -13,6 +13,9 @@ import {
   Grid,
   Chip,
   Divider,
+  Snackbar,
+  Alert,
+  AlertColor,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import {
@@ -25,23 +28,25 @@ import { Dayjs } from 'dayjs';
 import type {
   DaySchedule,
   TimeSlot,
-} from 'apps/doctor-appointment-system-fe/src/app/types';
-import {
-  useBookAppointment,
-  useAppointmentForm,
-} from 'apps/doctor-appointment-system-fe/src/app/hooks';
+} from 'apps/doctor-appointment-system-fe/src/common/types';
+import { useBookAppointment } from 'apps/doctor-appointment-system-fe/src/common/hooks';
+import { useAppointmentForm } from 'apps/doctor-appointment-system-fe/src/features/AppointmentBooking/hooks/useAppointmentForm';
 
 type AppointmentBookingProps = {
   schedule: DaySchedule[];
-  onError: (message: string) => void;
-  onSuccess: () => void;
 };
 
-export const AppointmentBooking = ({
-  schedule,
-  onError,
-  onSuccess,
-}: AppointmentBookingProps) => {
+export const AppointmentBooking = ({ schedule }: AppointmentBookingProps) => {
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: AlertColor;
+  }>({
+    open: false,
+    message: '',
+    severity: 'info',
+  });
+
   const {
     formState,
     updatePatientName,
@@ -55,6 +60,14 @@ export const AppointmentBooking = ({
   const bookMutation = useBookAppointment();
 
   const { patientName, selectedDate, selectedTime, description } = formState;
+
+  const showSnackbar = (message: string, severity: AlertColor) => {
+    setSnackbar({ open: true, message, severity });
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
 
   const formatTime = (hour: number, minute: number): string => {
     return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
@@ -84,7 +97,7 @@ export const AppointmentBooking = ({
     e.preventDefault();
 
     if (!isFormValid()) {
-      onError('Please fill in all fields');
+      showSnackbar('Please fill in all fields', 'error');
       return;
     }
 
@@ -98,11 +111,11 @@ export const AppointmentBooking = ({
 
       await bookMutation.mutateAsync(appointmentData);
       resetForm();
-      onSuccess();
+      showSnackbar('Appointment booked successfully!', 'success');
     } catch (error: any) {
       const errorMessage =
         error.response?.data?.error || 'Failed to book appointment';
-      onError(errorMessage);
+      showSnackbar(errorMessage, 'error');
     }
   };
 
@@ -279,6 +292,21 @@ export const AppointmentBooking = ({
           </Card>
         </Grid>
       </Grid>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          sx={{ width: '100%' }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

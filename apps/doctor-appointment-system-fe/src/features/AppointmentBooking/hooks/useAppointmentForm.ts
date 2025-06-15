@@ -2,8 +2,8 @@ import { useReducer } from 'react';
 import {
   appointmentFormReducer,
   initialAppointmentFormState,
-} from 'apps/doctor-appointment-system-fe/src/app/reducers/appointmentForm/appointmentFormReducer';
-import { AppointmentFormActionTypes } from 'apps/doctor-appointment-system-fe/src/app/reducers/appointmentForm/appointmentFormActionTypes';
+} from 'apps/doctor-appointment-system-fe/src/features/AppointmentBooking/reducers/appointmentFormReducer';
+import { AppointmentFormActionTypes } from 'apps/doctor-appointment-system-fe/src/features/AppointmentBooking/reducers/appointmentFormActionTypes';
 import { Dayjs } from 'dayjs';
 
 // Custom hook for appointment form management

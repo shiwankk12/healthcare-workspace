@@ -8,7 +8,7 @@ import {
   screen,
 } from '@storybook/test';
 
-import App from './App';
+import { AppLayout } from './AppLayout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -16,12 +16,13 @@ import { defaultUpdateAppointmentsHandler } from 'apps/doctor-appointment-system
 import { defaultDoctorDetailsHandler } from 'apps/doctor-appointment-system-fe/src/mocks/handlers/doctorDetails';
 import { defaultScheduleHandler } from 'apps/doctor-appointment-system-fe/src/mocks/handlers/schedule';
 import dayjs from 'dayjs';
+import { MemoryRouter } from 'react-router-dom';
 
 const queryClient = new QueryClient();
 
 export default {
   title: 'Doctor Appointment/Home',
-  component: App,
+  component: AppLayout,
   decorators: [
     (Story) => (
       <QueryClientProvider client={queryClient}>
@@ -40,12 +41,16 @@ export default {
       ],
     },
   },
-} as Meta<typeof App>;
+} as Meta<typeof AppLayout>;
 
-export const Default = {};
-
-// Story for appointment booking flow
-export const AppointmentBookingFlow: StoryObj = {
+export const Default: StoryObj = {
+  decorators: [
+    (Story) => (
+      <MemoryRouter initialEntries={['/book-appointment']}>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     await expect(canvas.getByRole('progressbar')).toBeVisible();
@@ -114,5 +119,27 @@ export const AppointmentBookingFlow: StoryObj = {
     await expect(
       canvas.getByText('Appointment booked successfully!'),
     ).toBeInTheDocument();
+  },
+};
+
+// Story specifically for the schedule view
+export const ScheduleView: StoryObj = {
+  decorators: [
+    (Story) => (
+      <MemoryRouter initialEntries={['/schedule']}>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    // Wait for loading to finish
+    await waitForElementToBeRemoved(() => canvas.queryByRole('progressbar'), {
+      timeout: 5000,
+    });
+
+    // Verify we're on the schedule tab
+    await expect(canvas.getByText("Doctor's Schedule")).toBeInTheDocument();
   },
 };

@@ -10,11 +10,11 @@ import {
 } from '@mui/material';
 import { CheckCircle, Cancel } from '@mui/icons-material';
 import { useMemo } from 'react';
-import type { DaySchedule } from 'apps/doctor-appointment-system-fe/src/app/types';
+import type { DaySchedule } from 'apps/doctor-appointment-system-fe/src/common/types';
 import {
   formatDate,
   formatTime,
-} from 'apps/doctor-appointment-system-fe/src/app/utils';
+} from 'apps/doctor-appointment-system-fe/src/common/utils';
 
 export const ScheduleDayItem = ({
   daySchedule,

@@ -1,4 +1,4 @@
-import { Doctor } from 'apps/doctor-appointment-system-fe/src/app/types';
+import { Doctor } from 'apps/doctor-appointment-system-fe/src/common/types';
 
 export const doctorDetailsResponse: Doctor = {
   id: 1,

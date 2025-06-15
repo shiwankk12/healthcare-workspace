@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { apiEndpoints } from 'apps/doctor-appointment-system-fe/src/app/services/api';
+import { apiEndpoints } from 'apps/doctor-appointment-system-fe/src/common/services/api';
 
 export const useSchedule = () => {
   return useQuery({
