@@ -1,0 +1,58 @@
+{
+  "name": "doctor-appointment-system-bff",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/doctor-appointment-system-bff/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/doctor-appointment-system-bff",
+        "main": "apps/doctor-appointment-system-bff/src/main.ts",
+        "tsConfig": "apps/doctor-appointment-system-bff/tsconfig.app.json",
+        "assets": ["apps/doctor-appointment-system-bff/src/assets"],
+        "webpackConfig": "apps/doctor-appointment-system-bff/webpack.config.js"
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/doctor-appointment-system-bff/src/environments/environment.ts",
+              "with": "apps/doctor-appointment-system-bff/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "doctor-appointment-system-bff:build",
+        "inspect": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "doctor-appointment-system-bff:build:development"
+        },
+        "production": {
+          "buildTarget": "doctor-appointment-system-bff:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/doctor-appointment-system-bff/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor Appointment API</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🏥 Doctor Appointment API</h1>
+        <p class="subtitle">RESTful API for booking doctor appointments</p>
+      </header>
+
+      <div class="doctor-info" id="doctorInfo">
+        <h2>Doctor Information</h2>
+        <div class="loading">Loading...</div>
+      </div>
+
+      <div class="api-routes">
+        <h2>📋 Available API Endpoints</h2>
+        <div class="route-grid">
+          <div class="route-card">
+            <span class="method get">GET</span>
+            <div class="route-info">
+              <code>/api/doctor</code>
+              <p>Get doctor information</p>
+            </div>
+          </div>
+
+          <div class="route-card">
+            <span class="method get">GET</span>
+            <div class="route-info">
+              <code>/api/schedule</code>
+              <p>Get doctor's schedule with availability</p>
+            </div>
+          </div>
+
+          <div class="route-card">
+            <span class="method post">POST</span>
+            <div class="route-info">
+              <code>/api/appointments</code>
+              <p>Book a new appointment</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="frontend-link">
+        <h3>🌐 Frontend Application</h3>
+        <p>
+          Access the patient booking interface at:
+          <a href="http://localhost:4200" target="_blank"
+            >http://localhost:4200</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
